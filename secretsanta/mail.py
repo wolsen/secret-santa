@@ -78,7 +78,7 @@ class SantaMail(object):
             server.sendmail(self.email, toaddr, body)
             server.quit()
         except:
-            print("Error sending email!")
+            print("Error sending email to %s!" % toaddr)
 
     def _send_to_secret_santa(self, pair):
         """

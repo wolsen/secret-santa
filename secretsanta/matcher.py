@@ -66,9 +66,6 @@ def choose_recipient(giver, recipients):
         pass
 
     for r in ordering:
-        print("Giver %s (%s) to recipient %s (%s)" %
-              (giver.name, giver.spouse, r.name, r.spouse))
-        
 	if not_married(giver, r):
             return r
 
