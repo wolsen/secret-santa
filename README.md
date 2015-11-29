@@ -7,12 +7,12 @@ giver to recipient.
 To get started to generate your own fun secret santa exchange list, the
 following steps can be followed:
 
-1. Open a terminal and git clone https://github.com/wolsen/secret-santa
+1. Open a terminal and `git clone https://github.com/wolsen/secret-santa`
 2. Edit the secret-santa.yaml file, specifying the email information for
    the game-master and the list of recipients.
 3. Edit the secretsanta/templates/santa.tmpl to configure the template which
    is sent to each of the secret santas.
-4. Run the secret-santa tool (e.g. python -m secretsanta.__init__ secretsanta)
+4. Run the secret-santa tool (e.g. `python -m secretsanta.__init__ secretsanta`)
 5. Have fun!
 
 # The Game Master
