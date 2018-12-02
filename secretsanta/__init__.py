@@ -38,6 +38,7 @@ def __main__():
     pairs = secretsanta.matcher.create_pairings(config.participants)
 
     mail = secretsanta.mail.SantaMail(**config.email)
+    print("Sending mail")
     mail.send(pairs)
 
 

@@ -22,7 +22,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from email.mime.text import MIMEText
 from jinja2 import Environment, FileSystemLoader
+from datetime import datetime as dt
 import os
 import six
 import smtplib
@@ -70,12 +72,17 @@ class SantaMail(object):
 
         self._send_master_list(pairings)
 
-    def _do_send(self, toaddr, body):
+    def _do_send(self, toaddr, body, subject):
         try:
+            msg = MIMEText(body)
+            msg['Subject'] = subject
+            msg['From'] = self.email
+            msg['To'] = toaddr
+
             server = smtplib.SMTP(self.smtp)
             server.starttls()
             server.login(self.username, self.password)
-            server.sendmail(self.email, toaddr, body)
+            server.sendmail(self.email, [toaddr], msg.as_string())
             server.quit()
         except:
             print("Error sending email to %s!" % toaddr)
@@ -87,7 +94,9 @@ class SantaMail(object):
         (giver, receiver) = pair
         template = j2env.get_template(self.template_santa)
         body = template.render(giver=giver, receiver=receiver)
-        self._do_send(giver.email, body)
+        year = dt.utcnow().year
+        subject = ('Your %s Farmer Family Secret Santa Match' % year)
+        self._do_send(giver.email, body, subject)
 
     def _send_master_list(self, pairings):
         """
@@ -100,4 +109,6 @@ class SantaMail(object):
 
         template = j2env.get_template(self.template_master)
         body = template.render(pairs=pair_list)
-        self._do_send(self.email, body)
+        year = dt.utcnow().year
+        subject = ('%s Farmer Family Secret Santa Master List' % year)
+        self._do_send(self.email, body, subject)
